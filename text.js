@@ -2,9 +2,8 @@ const createContainer = () => {
   const viewer = document.createElement('div')
   viewer.className = 'pdfViewer'
 
-  const container = document.createElement('div')
+  const container = document.querySelector('#pdf')
   container.appendChild(viewer)
-  document.body.appendChild(container)
 
   return container
 }

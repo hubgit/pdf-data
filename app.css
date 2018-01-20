@@ -10,17 +10,31 @@
   color: inherit;
 }*/
 
+body {
+  margin: 0;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.column {
+  flex: 1;
+}
+
 pre {
   white-space: pre-wrap;
   padding: 1em;
 }
 
 .text {
-  width: 80ch;
-  font-size: 20px;
+  font-size: 16px;
   line-height: 1.5;
   font-family: Georgia, Cambria, "Times New Roman", Times, serif;
   text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
+  /*-webkit-font-smoothing: antialiased;*/
   color: rgba(0, 0, 0, 0.8);
+  box-shadow: 0 0 5px 5px #aaa;
+  margin: 10px;
 }

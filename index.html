@@ -5,8 +5,16 @@
 <link rel="stylesheet" href="https://unpkg.com/pdfjs-dist@2.0.250/web/pdf_viewer.css">
 <link rel="stylesheet" href="app.css">
 
-<pre id="metadata" class="container"></pre>
-<pre id="text" class="container text"></pre>
+<div class="container">
+  <div class="column">
+    <div id="pdf"></div>
+    <pre id="metadata"></pre>
+  </div>
+
+  <div class="column">
+    <pre id="text" class="text"></pre>
+  </div>
+</div>
 
 <script src="https://unpkg.com/pdfjs-dist@2.0.250/build/pdf.min.js"></script>
 <script src="https://unpkg.com/pdfjs-dist@2.0.250/web/pdf_viewer.js"></script>
