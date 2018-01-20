@@ -16,8 +16,8 @@ const createViewer = () => {
   })
 
   viewer.eventBus.on('pagesinit', () => {
-    // viewer.currentScaleValue = 'page-width'
-    viewer.currentScaleValue = 1
+    viewer.currentScaleValue = 'page-width'
+    // viewer.currentScaleValue = 1
   })
 
   return viewer
