@@ -102,14 +102,19 @@ const extract = (divs, bounds) => {
   divs.forEach(div => {
     const rect = div.getBoundingClientRect()
 
+    // ignore divs that start or end outside column boundaries
     if (rect.x < bounds.left || rect.x > bounds.right) {
       return
     }
 
     const fontSize = Math.ceil(getFontSize(div))
 
-    if (rect.y > previous.y && fontSize !== previous.fontSize /*&& fontSize > bounds.fontSize*/) {
-      if (fontSize > previous.fontSize) { // bigger
+    if (rect.y > previous.y && fontSize !== previous.fontSize) {
+      // this is a new line and the font size has changed
+
+      if (fontSize > previous.fontSize) {
+        // the font size has increased
+
         if (block.parts.length) {
           blocks.push(block)
         }
@@ -119,7 +124,9 @@ const extract = (divs, bounds) => {
           fontSize,
           parts: []
         }
-      } else { // smaller
+      } else {
+        // the font size has decreaed
+
         if (block.parts.length) {
           blocks.push(block)
         }
@@ -133,6 +140,8 @@ const extract = (divs, bounds) => {
 
       block.parts.push(div.textContent)
     } else {
+      // this is not a new line, or the font size is the same
+
       if (shouldAddSpace(rect, previous)) {
         block.parts.push(' ')
       }
@@ -152,29 +161,21 @@ const extract = (divs, bounds) => {
 }
 
 export const getText = doc => new Promise(async resolve => {
-  const pages = []
   let rendered = 0
 
   const viewer = await createViewer()
 
-  viewer.eventBus.on('textlayerrendered', textLayer => {
-    pages[textLayer.pageNumber - 1] = textLayer.source.textDivs
+  viewer.eventBus.on('textlayerrendered', () => {
+    rendered++
 
-    if (++rendered === doc.numPages) {
-      // flatten the arrays
-      const divs = pages.reduce((output, textDivs) => {
-        // TODO: need to sort by y + x to ensure correct ordering?
+    if (rendered === doc.numPages) {
+      const divs = viewer.container.querySelectorAll('.textLayer > div')
 
-        textDivs.forEach(div => {
-          output.push(div)
-        })
-
-        return output
-      }, [])
+      // TODO: need to sort by y + x to ensure correct ordering?
 
       const bounds = calculateBounds(divs)
 
-      // TODO: simply group textDivs into blocks, first?
+      // TODO: group textDivs into blocks, first?
 
       const blocks = extract(divs, bounds)
 
