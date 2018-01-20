@@ -178,8 +178,6 @@ export const getText = doc => new Promise(async resolve => {
 
       const blocks = extract(divs, bounds)
 
-      console.log({ blocks })
-
       const text = blocks
         .map(block => block.parts.join(''))
         .join('\n\n')
