@@ -1,0 +1,26 @@
+/*.canvasWrapper {
+  display: none;
+}
+
+.textLayer {
+  opacity: 1;
+}
+
+.textLayer > div {
+  color: inherit;
+}*/
+
+pre {
+  white-space: pre-wrap;
+  padding: 1em;
+}
+
+.text {
+  width: 80ch;
+  font-size: 20px;
+  line-height: 1.5;
+  font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  color: rgba(0, 0, 0, 0.8);
+}
