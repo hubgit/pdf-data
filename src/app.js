@@ -79,7 +79,11 @@ const shouldAddSpace = (rect, previous) => {
 
   // add a space if further down than the bottom of the previous div, except when after a hyphen
   if (Math.round(rect.y) > previous.y) {
-    if (!previous.text.match(/-$/)) return true
+    if (previous.text.match(/-$/)) {
+      previous.text = previous.text.replace(/-$/, '')
+    } else {
+      return true
+    }
   }
 
   return false
@@ -104,7 +108,12 @@ const extract = (divs, bounds) => {
     const rect = div.getBoundingClientRect()
 
     // ignore divs that start or end outside column boundaries
-    if (rect.x < bounds.left || rect.x > bounds.right) {
+    // if (rect.x < bounds.left || rect.x > bounds.right) {
+    //   return
+    // }
+
+    // ignore divs that star outside column boundaries
+    if (rect.x < bounds.left) {
       return
     }
 
@@ -170,9 +179,15 @@ const getText = doc => new Promise(async resolve => {
     rendered++
 
     if (rendered === doc.numPages) {
-      const divs = viewer.container.querySelectorAll('.textLayer > div')
+      const divs = Array.from(viewer.container.querySelectorAll('.textLayer > div'))
 
       // TODO: need to sort by y + x to ensure correct ordering?
+      // divs.sort((a, b) => {
+      //   const aRect = a.getBoundingClientRect()
+      //   const bRect = b.getBoundingClientRect()
+      //
+      //   return aRect.y - bRect.y || aRect.x - bRect.x
+      // })
 
       const bounds = calculateBounds(divs)
 
@@ -191,6 +206,9 @@ const getText = doc => new Promise(async resolve => {
   })
 
   viewer.setDocument(doc)
+
+  window.scrollTo(0, document.body.scrollHeight)
+  window.scrollTo(0, 0)
 })
 
 PDFJS.workerSrc = 'https://unpkg.com/pdfjs-dist@2.0.250/build/pdf.worker.min.js'
