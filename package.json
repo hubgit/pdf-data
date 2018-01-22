@@ -9,7 +9,8 @@
   "author": "Alf Eaton <eaton.alf@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "serve src"
+    "start": "serve src",
+    "deploy": "now --public"
   },
   "dependencies": {
     "serve": "^6.4.8"
