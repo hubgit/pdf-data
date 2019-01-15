@@ -13,7 +13,7 @@
     "deploy": "now --public"
   },
   "dependencies": {
-    "serve": "^6.4.8"
+    "serve": "^10.1.1"
   },
   "now": {
     "alias": "pdf-data"
